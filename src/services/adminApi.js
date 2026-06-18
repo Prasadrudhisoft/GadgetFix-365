@@ -53,6 +53,30 @@ const adminApi = {
   // Walking orders
   createWalkingOrder: (data) =>
     axiosInstance.post('/walking_orders', data),
+
+  getWalkingOrders: () =>
+    axiosInstance.get('/walking_my_orders'),
+
+  getWalkingQuotation: (orderId) =>
+    axiosInstance.get(`/walking_get_quotation/${orderId}`),
+
+  confirmWalkingOrder: (orderId, quotationType) =>
+    axiosInstance.post('/walking_confirm_order', { order_id: orderId, quotation_type: quotationType }),
+
+  cancelWalkingOrder: (orderId) =>
+    axiosInstance.post('/walking_cancel_order', { order_id: orderId }),
+
+  getWalkingBill: (orderId) =>
+    axiosInstance.get(`/walking_my_bill?order_id=${orderId}`),
+
+  getWalkingFinalQuotation: (orderId) =>
+    axiosInstance.get(`/walking_get_final_quotation/${orderId}`),
+
+  confirmWalkingFinalOrder: (orderId, quotationType) =>
+    axiosInstance.post('/walking_confirm_final_order', { order_id: orderId, quotation_type: quotationType }),
+
+  getWalkingConfirmType: (orderId) =>
+    axiosInstance.get(`/walking_confirm_type/${orderId}`),
 };
 
 export default adminApi;

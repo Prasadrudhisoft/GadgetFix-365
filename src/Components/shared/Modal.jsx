@@ -15,6 +15,13 @@ export const Modal = ({
   title = '',
   subtitle = '',
   headerColor = 'brand',
+  // When true, skip Modal's own padding + scroll wrapper around children.
+  // Use this when the modal content owns its own header/body/footer flex
+  // layout (flex-shrink-0 header, flex-1 overflow-y-auto body, flex-shrink-0
+  // footer) — e.g. receipts, multi-section forms with sticky footers, etc.
+  // Without this, nesting a second overflow-y-auto inside Modal's wrapper
+  // creates a double-scroll container and breaks edge-to-edge headers/footers.
+  fullBleed = false,
 }) => {
   useScrollLock(isOpen);
 
@@ -122,11 +129,19 @@ export const Modal = ({
             )}
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto custom-scroll">
-              <div className="p-4 sm:p-5 lg:p-6">
+            {fullBleed ? (
+              // Caller owns the full flex-col layout (header / scrollable body / footer).
+              // No padding, no extra scroll container — just hand over the space.
+              <div className="flex-1 flex flex-col overflow-hidden min-h-0">
                 {children}
               </div>
-            </div>
+            ) : (
+              <div className="flex-1 overflow-y-auto custom-scroll">
+                <div className="p-4 sm:p-5 lg:p-6">
+                  {children}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
       )}

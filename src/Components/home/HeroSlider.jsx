@@ -8,6 +8,7 @@ import waterImage from '../../assets/images/water-damage.png';
 import crackedImage from '../../assets/images/cracked-screen.png';
 import chargingImage from '../../assets/images/charging-port.png';
 import cameraImage from '../../assets/images/camera-damage.png';
+import motherbdImage from '../../assets/images/motherboard.png';
 
 const heroImages = [
   {
@@ -34,6 +35,11 @@ const heroImages = [
     src: cameraImage,
     alt: 'Camera Damage Repair',
     title: 'Camera Repair'
+  },
+    {
+    src: motherbdImage,
+    alt: 'Motherboard Repair',
+    title: 'Motherboard Repair'
   }
 ];
 

@@ -18,6 +18,7 @@ import FinalQuotationAdminModal from '../Components/admin/FinalQuotationAdminMod
 import ViewFinalQuotationModal from '../Components/admin/ViewFinalQuotationModal';
 import ViewTempQuotationModal from '../Components/admin/ViewTempQuotationModal';
 import MarkPaidModal from '../Components/admin/MarkPaidModal';
+import WalkingOrdersPage from '../Components/admin/WalkingOrdersPage';
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -63,11 +64,12 @@ const AdminPage = () => {
   const recentOrders = orders.slice(0, 10);
 
   const pageLabels = {
-    dashboard:  'Dashboard',
-    orders:     'All Orders',
-    bills:      'Bills',
-    categories: 'Categories',
-    brands:     'Brands',
+    dashboard:       'Dashboard',
+    orders:          'All Orders',
+    'walking-orders':'Walk-in Orders',
+    bills:           'Bills',
+    categories:      'Categories',
+    brands:          'Brands',
   };
 
   return (
@@ -214,8 +216,9 @@ const AdminPage = () => {
             </div>
           )}
 
-          {activePage === 'orders'     && <OrdersTable onViewOrder={handleViewOrder} onViewBill={handleViewBill} />}
-          {activePage === 'bills'      && <BillsTable onViewBill={handleViewBill} />}
+          {activePage === 'orders'          && <OrdersTable onViewOrder={handleViewOrder} onViewBill={handleViewBill} />}
+          {activePage === 'walking-orders'  && <WalkingOrdersPage onViewOrder={handleViewOrder} />}
+          {activePage === 'bills'           && <BillsTable onViewBill={handleViewBill} />}
           {activePage === 'categories' && <CategoriesGrid onAddCategory={() => setAddCategoryOpen(true)} />}
           {activePage === 'brands'     && <BrandsGrid onAddBrand={() => setAddBrandOpen(true)} />}
 

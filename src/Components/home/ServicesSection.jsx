@@ -279,12 +279,12 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 12 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="relative w-full max-w-[520px] rounded-2xl overflow-hidden"
-              style={{
-                background: 'linear-gradient(160deg, #111c3a 0%, #0f1e3d 100%)',
-                border: '1px solid rgba(99,150,255,0.18)',
-                boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,150,255,0.1)',
-              }}
+        className="relative w-full max-w-[520px] rounded-2xl overflow-hidden"
+style={{
+  background: 'linear-gradient(135deg, #0f1e3d 0%, #1a2f5e 40%, #1d4ed8 100%)',
+  border: '1px solid rgba(99,150,255,0.18)',
+  boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,150,255,0.1)',
+}}
               onClick={e => e.stopPropagation()}
             >
               {/* Modal header */}

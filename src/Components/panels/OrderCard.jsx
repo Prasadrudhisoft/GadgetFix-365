@@ -41,7 +41,7 @@ export const OrderCard = ({
   const icon = getDeviceIcon(model_name);
   const photos = Array.isArray(photo_path) ? photo_path : (photo_path ? [photo_path] : []);
 
-  // ✅ XSS Fix: dangerouslySetInnerHTML काढला — plain text render करतो
+ 
   const addressParts = [
     house_no && building_name ? `${escapeHtml(house_no)}, ${escapeHtml(building_name)}` : '',
     full_address ? escapeHtml(full_address) : '',
@@ -69,6 +69,11 @@ export const OrderCard = ({
 
   const showReceipt = statusLower === 'completed';
 
+  // Shared classes for action buttons: full-width + centered on mobile,
+  // auto-width + left-aligned content from sm breakpoint up.
+  const actionBtnBase =
+    'w-full sm:w-auto px-4 py-2 rounded-xl font-manrope text-xs font-bold transition-all flex items-center justify-center sm:justify-start gap-2 whitespace-nowrap';
+
   return (
     <div className="bg-white border-[1.5px] border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
       <div className="p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
@@ -78,7 +83,7 @@ export const OrderCard = ({
             {icon}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-sora text-sm font-bold text-text truncate">
+            <h3 className="font-sora text-sm font-bold text-text break-words sm:truncate">
               {escapeHtml(model_name || '—')} — {escapeHtml(problem_title || '—')}
             </h3>
             <div className="font-manrope text-[11px] text-text-4 font-medium mt-1 flex flex-wrap gap-x-3 gap-y-1">
@@ -99,13 +104,15 @@ export const OrderCard = ({
         </div>
 
         {/* Right Section - Buttons */}
-        <div className="flex flex-row sm:flex-col items-center justify-between sm:items-end gap-2">
-          <Badge status={status} />
+        <div className="flex flex-col w-full sm:w-auto items-stretch sm:items-end gap-2">
+          <div className="flex justify-start sm:justify-end">
+            <Badge status={status} />
+          </div>
 
           {showQuotation && (
             <button
               onClick={() => onOpenQuotation(id)}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-manrope text-xs font-bold hover:from-blue-700 hover:to-blue-800 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
+              className={`${actionBtnBase} bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-sm`}
             >
               <i className="fas fa-eye text-[11px]"></i>
               View Quotation & Confirm
@@ -115,7 +122,7 @@ export const OrderCard = ({
           {showFinalQuotation && (
             <button
               onClick={() => onOpenFinalQuotation(id)}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-manrope text-xs font-bold hover:from-emerald-700 hover:to-emerald-800 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
+              className={`${actionBtnBase} bg-gradient-to-r from-emerald-600 to-emerald-700 text-white hover:from-emerald-700 hover:to-emerald-800 shadow-sm`}
             >
               <i className="fas fa-check-double text-[11px]"></i>
               View Final & Confirm
@@ -125,7 +132,7 @@ export const OrderCard = ({
           {showBill && (
             <button
               onClick={() => onOpenBill(id)}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-purple-700 text-white font-manrope text-xs font-bold hover:from-purple-700 hover:to-purple-800 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
+              className={`${actionBtnBase} bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 shadow-sm`}
             >
               <i className="fas fa-file-invoice text-[11px]"></i>
               View Bill
@@ -135,7 +142,7 @@ export const OrderCard = ({
           {showReceipt && (
             <button
               onClick={() => onOpenReceipt?.(id)}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-manrope text-xs font-bold hover:from-emerald-700 hover:to-emerald-800 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
+              className={`${actionBtnBase} bg-gradient-to-r from-emerald-600 to-emerald-700 text-white hover:from-emerald-700 hover:to-emerald-800 shadow-sm`}
             >
               <i className="fas fa-receipt text-[11px]"></i>
               Download Receipt
@@ -145,7 +152,7 @@ export const OrderCard = ({
           {showCancel && (
             <button
               onClick={() => onOpenCancel(id)}
-              className="px-4 py-2 rounded-xl bg-red-50 border border-red-200 text-red-600 font-manrope text-xs font-bold hover:bg-red-100 transition-all flex items-center gap-2 whitespace-nowrap"
+              className={`${actionBtnBase} bg-red-50 border border-red-200 text-red-600 hover:bg-red-100`}
             >
               <i className="fas fa-times text-[11px]"></i>
               Cancel Order
@@ -154,7 +161,7 @@ export const OrderCard = ({
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 text-gray-600 font-manrope text-xs font-bold hover:bg-brand-light hover:text-brand hover:border-brand transition-all flex items-center gap-2"
+            className={`${actionBtnBase} bg-gray-100 border border-gray-200 text-gray-600 hover:bg-brand-light hover:text-brand hover:border-brand`}
           >
             <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} text-[10px]`}></i>
             {isExpanded ? 'Hide Details' : 'Show Details'}
@@ -176,7 +183,7 @@ export const OrderCard = ({
               <OrderTimeline status={status} />
 
               {status === 'quotation_sent' && (
-                <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-xl p-3">
+                <div className="flex items-start sm:items-center gap-3 bg-blue-50 border border-blue-200 rounded-xl p-3">
                   <div className="text-2xl">💰</div>
                   <div>
                     <h4 className="font-sora text-xs font-bold text-blue-800 mb-0.5">
@@ -190,7 +197,7 @@ export const OrderCard = ({
               )}
 
               {status === 'final_quotation_sent' && (
-                <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+                <div className="flex items-start sm:items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-3">
                   <div className="text-2xl">✅</div>
                   <div>
                     <h4 className="font-sora text-xs font-bold text-emerald-800 mb-0.5">
@@ -204,7 +211,7 @@ export const OrderCard = ({
               )}
 
               {status === 'Completed' && (
-                <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl p-3">
+                <div className="flex items-start sm:items-center gap-3 bg-green-50 border border-green-200 rounded-xl p-3">
                   <div className="text-2xl">🎉</div>
                   <div>
                     <h4 className="font-sora text-xs font-bold text-green-800 mb-0.5">
@@ -218,7 +225,7 @@ export const OrderCard = ({
               )}
 
               {showBill && status !== 'Completed' && (
-                <div className="flex items-center gap-3 bg-purple-50 border border-purple-200 rounded-xl p-3">
+                <div className="flex items-start sm:items-center gap-3 bg-purple-50 border border-purple-200 rounded-xl p-3">
                   <div className="text-2xl">📄</div>
                   <div>
                     <h4 className="font-sora text-xs font-bold text-purple-800 mb-0.5">
@@ -249,7 +256,7 @@ export const OrderCard = ({
 
               { }
               <div className="bg-white rounded-xl p-3 border border-border">
-                <p className="font-manrope text-xs text-gray-700 leading-relaxed">
+                <p className="font-manrope text-xs text-gray-700 leading-relaxed break-words">
                   📍 <strong>{escapeHtml(house_no)}, {escapeHtml(building_name)}</strong>
                   {addressParts.slice(2).map((part, i) => (
                     <span key={i}>, {part}</span>

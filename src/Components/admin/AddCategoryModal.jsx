@@ -132,9 +132,13 @@ const AddCategoryModal = ({ isOpen, onClose, onSuccess }) => {
           background: #fff;
           width: 100%;
           border-radius: 20px;
+          /* dvh accounts for mobile browser chrome (and the on-screen keyboard)
+             shrinking the visible viewport — vh alone can leave the footer
+             hidden behind the keyboard. Browsers without dvh support just
+             ignore the second declaration and keep the vh fallback. */
           max-height: calc(100vh - 24px - env(safe-area-inset-bottom, 0px));
-          overflow-y: auto;
-          overflow-x: hidden;
+          max-height: calc(100dvh - 24px - env(safe-area-inset-bottom, 0px));
+          overflow: hidden;
           display: flex;
           flex-direction: column;
           animation: acmSlideUp 0.30s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -144,6 +148,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSuccess }) => {
             width: 480px;
             max-width: 480px;
             max-height: 90vh;
+            max-height: 90dvh;
             animation: acmFadeIn 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
           }
         }
@@ -167,26 +172,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSuccess }) => {
             transform: translateY(0) scale(1);
           }
         }
-        .acm-box::-webkit-scrollbar {
-          width: 4px;
-        }
-        .acm-box::-webkit-scrollbar-thumb {
-          background: #bfdbfe;
-          border-radius: 3px;
-        }
-        .acm-handle {
-          width: 40px;
-          height: 4px;
-          background: #d1d5db;
-          border-radius: 99px;
-          margin: 10px auto 0;
-          flex-shrink: 0;
-        }
-        @media (min-width: 640px) {
-          .acm-handle {
-            display: none;
-          }
-        }
+      
         .acm-head {
           background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
           padding: 16px 16px;
@@ -242,9 +228,23 @@ const AddCategoryModal = ({ isOpen, onClose, onSuccess }) => {
           transform: rotate(90deg);
         }
         .acm-body {
+          /* The only scrolling region — header and footer stay pinned in
+             place above/below it instead of scrolling away with content. */
           padding: 16px 16px 4px;
           flex: 1;
           min-width: 0;
+          min-height: 0;
+          overflow-y: auto;
+          overflow-x: hidden;
+          scrollbar-width: thin;
+          scrollbar-color: #bfdbfe transparent;
+        }
+        .acm-body::-webkit-scrollbar {
+          width: 4px;
+        }
+        .acm-body::-webkit-scrollbar-thumb {
+          background: #bfdbfe;
+          border-radius: 3px;
         }
         .acm-alert {
           padding: 10px 13px;
@@ -399,6 +399,17 @@ const AddCategoryModal = ({ isOpen, onClose, onSuccess }) => {
           opacity: 0.60;
           cursor: not-allowed;
         }
+        /* Extra-narrow phones (e.g. folded outer screens, older small Android):
+           stack the footer buttons instead of risking label clipping. */
+        @media (max-width: 380px) {
+          .acm-footer {
+            flex-wrap: wrap;
+          }
+          .acm-btn-cancel,
+          .acm-btn-save {
+            flex: 1 1 100%;
+          }
+        }
         .acm-spinner {
           width: 16px;
           height: 16px;
@@ -425,7 +436,7 @@ const AddCategoryModal = ({ isOpen, onClose, onSuccess }) => {
         }}
       >
         <div className="acm-box">
-          <div className="acm-handle" aria-hidden="true" />
+         
 
           <div className="acm-head">
             <div className="acm-head-text">

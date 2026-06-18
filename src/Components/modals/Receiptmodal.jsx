@@ -20,55 +20,57 @@ const isVideo = (url) => VIDEO_EXTS.includes((url || '').split('.').pop().toLowe
 
 const InfoRow = ({ label, value }) => (
   <div className="flex gap-2 py-1.5 border-b border-border last:border-0">
-    <span className="font-manrope text-[10.5px] font-700 text-text-4 uppercase tracking-wide w-28 flex-shrink-0">
+    <span className="font-manrope text-[10.5px] font-700 text-text-4 uppercase tracking-wide w-24 sm:w-28 flex-shrink-0">
       {label}
     </span>
-    <span className="font-manrope text-[12px] font-700 text-text flex-1">{value || '—'}</span>
+    <span className="font-manrope text-[12px] font-700 text-text flex-1 break-words min-w-0">{value || '—'}</span>
   </div>
 );
 
 const ServiceTable = ({ services }) => (
-  <table className="w-full border-collapse text-[11.5px]">
-    <thead>
-      <tr className="bg-bg2">
-        <th className="px-3 py-2 text-left font-manrope font-800 text-text-4 uppercase tracking-wide text-[9.5px] w-7">#</th>
-        <th className="px-3 py-2 text-left font-manrope font-800 text-text-4 uppercase tracking-wide text-[9.5px]">Service</th>
-        <th className="px-3 py-2 text-right font-manrope font-800 text-text-4 uppercase tracking-wide text-[9.5px]">Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      {services && services.length > 0 ? (
-        services.map((s, i) => (
-          <tr key={i} className="border-b border-border last:border-0">
-            <td className="px-3 py-2 text-text-4">{i + 1}</td>
-            <td className="px-3 py-2 text-text">{s.service || '—'}</td>
-            <td className="px-3 py-2 text-right font-bold text-text">{fmtCurr(s.total_price || 0)}</td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan={3} className="px-3 py-4 text-center text-text-4 font-manrope text-[11px]">
-            No services listed
-          </td>
+  <div className="overflow-x-auto">
+    <table className="w-full border-collapse text-[11.5px] min-w-[280px]">
+      <thead>
+        <tr className="bg-bg2">
+          <th className="px-3 py-2 text-left font-manrope font-800 text-text-4 uppercase tracking-wide text-[9.5px] w-7">#</th>
+          <th className="px-3 py-2 text-left font-manrope font-800 text-text-4 uppercase tracking-wide text-[9.5px]">Service</th>
+          <th className="px-3 py-2 text-right font-manrope font-800 text-text-4 uppercase tracking-wide text-[9.5px]">Amount</th>
         </tr>
-      )}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {services && services.length > 0 ? (
+          services.map((s, i) => (
+            <tr key={i} className="border-b border-border last:border-0">
+              <td className="px-3 py-2 text-text-4">{i + 1}</td>
+              <td className="px-3 py-2 text-text">{s.service || '—'}</td>
+              <td className="px-3 py-2 text-right font-bold text-text whitespace-nowrap">{fmtCurr(s.total_price || 0)}</td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={3} className="px-3 py-4 text-center text-text-4 font-manrope text-[11px]">
+              No services listed
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
 );
 
 const TotalsBlock = ({ subtotal, taxPct, taxAmt, grand }) => (
   <div className="border border-border rounded-lg overflow-hidden">
-    <div className="flex justify-between px-4 py-2.5 border-b border-border">
+    <div className="flex justify-between items-center gap-2 px-4 py-2.5 border-b border-border">
       <span className="font-manrope text-[12px] text-text-3 font-600">Subtotal</span>
-      <span className="font-manrope text-[12px] font-700 text-text">{fmtCurr(subtotal)}</span>
+      <span className="font-manrope text-[12px] font-700 text-text whitespace-nowrap">{fmtCurr(subtotal)}</span>
     </div>
-    <div className="flex justify-between px-4 py-2.5 border-b border-border">
+    <div className="flex justify-between items-center gap-2 px-4 py-2.5 border-b border-border">
       <span className="font-manrope text-[12px] text-text-3 font-600">Tax ({taxPct || 0}%)</span>
-      <span className="font-manrope text-[12px] font-700 text-warning">{fmtCurr(taxAmt)}</span>
+      <span className="font-manrope text-[12px] font-700 text-warning whitespace-nowrap">{fmtCurr(taxAmt)}</span>
     </div>
-    <div className="flex justify-between px-4 py-3 bg-brand-light">
+    <div className="flex justify-between items-center gap-2 px-4 py-3 bg-brand-light">
       <span className="font-manrope text-[13px] font-800 text-brand">Grand Total</span>
-      <span className="font-sora text-[16px] font-900 text-brand">{fmtCurr(grand)}</span>
+      <span className="font-sora text-[16px] font-900 text-brand whitespace-nowrap">{fmtCurr(grand)}</span>
     </div>
   </div>
 );
@@ -91,38 +93,38 @@ const QuotationCard = ({ q, type, isFinal }) => {
   return (
     <div className={`border-2 ${borderColor} rounded-xl overflow-hidden flex flex-col`}>
       {/* Header */}
-      <div className={`${bgHeader} px-5 py-4 text-white`}>
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-base">🔧</div>
-            <div>
-              <div className="font-sora text-[15px] font-800">Gadgetfix365</div>
-              <div className="font-manrope text-[9px] opacity-70">India's #1 Mobile Repair</div>
+      <div className={`${bgHeader} px-4 sm:px-5 py-4 text-white`}>
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-base flex-shrink-0">🔧</div>
+            <div className="min-w-0">
+              <div className="font-sora text-[14px] sm:text-[15px] font-800 truncate">Gadgetfix365</div>
+              <div className="font-manrope text-[9px] opacity-70 truncate">India's #1 Mobile Repair</div>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            <span className={`text-[9px] font-800 px-2.5 py-0.5 rounded-full ${isFinal ? 'bg-emerald-500' : 'bg-amber-500'}`}>
+          <div className="flex flex-col items-end gap-1 flex-shrink-0">
+            <span className={`text-[9px] font-800 px-2.5 py-0.5 rounded-full whitespace-nowrap ${isFinal ? 'bg-emerald-500' : 'bg-amber-500'}`}>
               {isFinal ? 'FINAL QUOTATION' : 'TEMP QUOTATION'}
             </span>
-            <span className="text-[9px] font-800 px-2.5 py-0.5 rounded-full bg-white/20 border border-white/30">
+            <span className="text-[9px] font-800 px-2.5 py-0.5 rounded-full bg-white/20 border border-white/30 whitespace-nowrap">
               {isOrig ? 'ORIGINAL' : 'DUPLICATE'}
             </span>
           </div>
         </div>
-        <div className="font-manrope text-[9.5px] opacity-70">
+        <div className="font-manrope text-[9.5px] opacity-70 break-words">
           📞 +91 80709 00800 &nbsp;·&nbsp; ✉️ support@gadgetfix365.in
         </div>
       </div>
 
       {/* Quotation No + Date */}
-      <div className="bg-bg2 px-4 py-2.5 flex justify-between items-center border-b border-border">
-        <div>
+      <div className="bg-bg2 px-4 py-2.5 flex justify-between items-center gap-2 border-b border-border">
+        <div className="min-w-0">
           <div className="font-manrope text-[9px] text-text-4 font-800 uppercase tracking-wide">Quotation No.</div>
-          <div className="font-sora text-[14px] font-900 text-text">#{q.quotation_no || '—'}</div>
+          <div className="font-sora text-[14px] font-900 text-text truncate">#{q.quotation_no || '—'}</div>
         </div>
-        <div className="text-right">
+        <div className="text-right flex-shrink-0">
           <div className="font-manrope text-[9px] text-text-4 font-800 uppercase tracking-wide">Date</div>
-          <div className="font-manrope text-[11px] font-700 text-text">
+          <div className="font-manrope text-[11px] font-700 text-text whitespace-nowrap">
             {new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
           </div>
         </div>
@@ -351,14 +353,14 @@ const fetchQuotation = async () => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl" showCloseButton={false}>
-      {/* Header */}
-      <div className="bg-gradient-brand px-7 py-5 text-white flex items-center justify-between flex-shrink-0">
-        <div>
-          <h2 className="font-sora text-[19px] font-extrabold tracking-tight mb-0.5">
+    <Modal isOpen={isOpen} onClose={onClose} size="xl" showCloseButton={false} fullBleed>
+      {/* Header — flex-shrink-0 so it never gets pushed/scrolled by the body */}
+      <div className="bg-gradient-brand px-4 sm:px-7 py-4 sm:py-5 text-white flex items-center justify-between gap-3 flex-shrink-0">
+        <div className="min-w-0">
+          <h2 className="font-sora text-[16px] sm:text-[19px] font-extrabold tracking-tight mb-0.5 break-words">
             🧾 {isFinal ? 'Final Quotation Receipt' : 'Temp Quotation Receipt'}
           </h2>
-          <p className="font-manrope text-[12px] opacity-80">
+          <p className="font-manrope text-[11px] sm:text-[12px] opacity-80">
             {isFinal
               ? 'Final quote after physical inspection by technician'
               : 'Temporary quote — may change after device inspection'}
@@ -366,14 +368,14 @@ const fetchQuotation = async () => {
         </div>
         <button
           onClick={onClose}
-          className="w-[34px] h-[34px] rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 hover:rotate-90 transition-all"
+          className="w-[30px] h-[30px] sm:w-[34px] sm:h-[34px] rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 hover:rotate-90 transition-all flex-shrink-0"
         >
           <i className="fas fa-times"></i>
         </button>
       </div>
 
-      {/* Body */}
-      <div className="p-5 overflow-y-auto max-h-[calc(90vh-200px)] custom-scrollbar">
+      {/* Body — the ONLY scrolling region; fills whatever space header/footer leave behind */}
+      <div className="flex-1 overflow-y-auto custom-scroll p-4 sm:p-5 min-h-0">
         {isLoading ? (
           <div className="flex items-center justify-center py-16">
             <Spinner size="lg" />
@@ -387,12 +389,12 @@ const fetchQuotation = async () => {
         ) : quotation ? (
           <>
             {/* Quotation type badge */}
-            <div className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg border mb-5 font-manrope text-[12.5px] font-bold ${
+            <div className={`flex items-start sm:items-center gap-2.5 px-4 py-2.5 rounded-lg border mb-5 font-manrope text-[12.5px] font-bold ${
               isFinal
                 ? 'bg-green-50 border-green-200 text-green-700'
                 : 'bg-amber-50 border-amber-200 text-amber-700'
             }`}>
-              <span className="text-lg">{isFinal ? '✅' : '⏳'}</span>
+              <span className="text-lg flex-shrink-0">{isFinal ? '✅' : '⏳'}</span>
               <span>
                 {isFinal
                   ? 'Final Quotation — generated after physical device inspection'
@@ -441,19 +443,22 @@ const fetchQuotation = async () => {
         ) : null}
       </div>
 
-      {/* Footer */}
+      {/* Footer — flex-shrink-0; stacks on mobile so the helper text doesn't crush the buttons */}
       {!isLoading && !error && quotation && (
-        <div className="px-6 py-4 border-t border-border bg-bg2 flex items-center justify-between gap-3 sticky bottom-0">
-          <p className="font-manrope text-[11px] text-text-4 font-500">
+        <div className="px-4 sm:px-6 py-4 border-t border-border bg-bg2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 flex-shrink-0">
+          <p className="font-manrope text-[11px] text-text-4 font-500 sm:flex-1">
             Both Original and Duplicate quotations shown side by side for your comparison.
           </p>
-          <div className="flex gap-2.5 flex-shrink-0">
-            <Button variant="outline" size="sm" onClick={onClose}>Close</Button>
+          <div className="flex gap-2.5 w-full sm:w-auto flex-shrink-0">
+            <Button variant="outline" size="sm" onClick={onClose} className="flex-1 sm:flex-none">
+              Close
+            </Button>
             <Button
               variant="primary"
               size="sm"
               onClick={handlePrint}
               icon={<i className="fas fa-print"></i>}
+              className="flex-1 sm:flex-none"
             >
               Print Receipt
             </Button>

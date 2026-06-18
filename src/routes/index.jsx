@@ -12,7 +12,14 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route
+        path="/"
+        element={
+          isLoggedIn && user?.role === 'admin'
+            ? <Navigate to="/admin" replace />
+            : <HomePage />
+        }
+      />
       <Route
         path="/admin"
         element={

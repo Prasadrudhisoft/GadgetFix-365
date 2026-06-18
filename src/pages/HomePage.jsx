@@ -49,9 +49,16 @@ export const HomePage = () => {
     closeModal('book');
   }, [closeModal]);
 
+  // NOTE: UIContext currently stores modalData as a flat object
+  // (e.g. { categoryId, brandId }) tied to whichever modal is open —
+  // it is NOT namespaced like { book: { categoryId, brandId } }.
+  // So we only spread modalData when this modal is the one that's open.
   const getModalPropsSafe = (modalName) => {
     if (getModalProps) return getModalProps(modalName);
-    return { isOpen: isModalOpen(modalName), ...(modalData?.[modalName] || {}) };
+    return {
+      isOpen: isModalOpen(modalName),
+      ...(isModalOpen(modalName) ? modalData : {}),
+    };
   };
 
   const authModalProps = getModalPropsSafe('auth');
@@ -88,8 +95,8 @@ export const HomePage = () => {
       <BookRepairModal
         isOpen={bookModalProps.isOpen}
         onClose={closeBookModal}
-        preselectedCategoryId={bookModalProps.categoryId}  // ✅
-        preselectedBrandId={bookModalProps.brandId}        // ✅
+        preselectedCategoryId={bookModalProps.categoryId}  
+        preselectedBrandId={bookModalProps.brandId}        
       />
 
       {(isPanelOpen('orders') || isPanelOpen('profile')) && (

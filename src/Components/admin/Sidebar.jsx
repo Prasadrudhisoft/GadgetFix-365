@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { getInitials } from '../../utils/adminHelpers';
-import WalkingOrderModal from '../modals/WalkingOrderModal';
 
 const NAV_ITEMS = [
-  { id: 'dashboard', icon: 'fas fa-chart-pie',            label: 'Dashboard',  section: 'main',   badge: null      },
-  { id: 'orders',    icon: 'fas fa-clipboard-list',        label: 'All Orders', section: 'main',   badge: 'pending' },
-  { id: 'bills',     icon: 'fas fa-file-invoice-dollar',   label: 'Bills',      section: 'main',   badge: null      },
-  { id: 'categories',icon: 'fas fa-layer-group',           label: 'Categories', section: 'manage', badge: null      },
-  { id: 'brands',    icon: 'fas fa-tags',                  label: 'Brands',     section: 'manage', badge: null      },
+  { id: 'dashboard',      icon: 'fas fa-chart-pie',            label: 'Dashboard',     section: 'main',   badge: null      },
+  { id: 'orders',         icon: 'fas fa-clipboard-list',        label: 'All Orders',    section: 'main',   badge: 'pending' },
+  { id: 'walking-orders', icon: 'fas fa-person-walking',        label: 'Walk-in Orders',section: 'main',   badge: null      },
+  { id: 'bills',          icon: 'fas fa-file-invoice-dollar',   label: 'Bills',         section: 'main',   badge: null      },
+  { id: 'categories',     icon: 'fas fa-layer-group',           label: 'Categories',    section: 'manage', badge: null      },
+  { id: 'brands',         icon: 'fas fa-tags',                  label: 'Brands',        section: 'manage', badge: null      },
 ];
 
-const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, onToggle, onOrderCreated }) => {
+const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, onToggle }) => {
   const { user, logout } = useAuth();
-  const [time, setTime]           = useState('');
-  const [walkInOpen, setWalkInOpen] = useState(false);
+  const [time, setTime] = useState('');
 
   useEffect(() => {
     const updateTime = () =>
@@ -24,9 +23,8 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
     return () => clearInterval(id);
   }, []);
 
-  const handleLogout    = () => { if (window.confirm('Are you sure you want to logout?')) logout(); };
-  const handleNavClick  = (pageId) => { onPageChange(pageId); onClose(); };
-  const handleWalkInOpen = () => { onClose(); setWalkInOpen(true); };
+  const handleLogout   = () => { if (window.confirm('Are you sure you want to logout?')) logout(); };
+  const handleNavClick = (pageId) => { onPageChange(pageId); onClose(); };
 
   return (
     <>
@@ -101,35 +99,6 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
           height: 100%; width: 3px;
           background: linear-gradient(135deg, #1d4ed8, #2563eb, #1e40af);
           border-radius: 0 3px 3px 0;
-        }
-
-        /* ── Walk-in button ── */
-        .walk-in-btn {
-          display: flex;
-          align-items: center;
-          gap: 11px;
-          padding: 11px 14px;
-          border-radius: 16px;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-          font-family: 'Manrope', sans-serif;
-          font-size: 13.5px;
-          font-weight: 700;
-          margin-bottom: 3px;
-          width: 100%;
-          text-align: left;
-          position: relative;
-          overflow: hidden;
-          color: #93c5fd;
-          background: rgba(29,78,216,0.15);
-          border: 1px solid rgba(59,130,246,0.2);
-        }
-        .walk-in-btn:hover {
-          background: rgba(29,78,216,0.35) !important;
-          color: #fff !important;
-          border-color: rgba(59,130,246,0.5) !important;
-          transform: translateX(4px);
-          box-shadow: 0 4px 16px rgba(29,78,216,0.3);
         }
 
         /* ── Section label ── */
@@ -246,13 +215,6 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
             </button>
           ))}
 
-          <button className="walk-in-btn" onClick={handleWalkInOpen}>
-            <span style={{ fontSize: '16px', flexShrink: 0, width: '20px', textAlign: 'center' }}>
-              <i className="fas fa-person-walking" />
-            </span>
-            Walk-in Order
-          </button>
-
           <div className="section-label" style={{ marginTop: '8px' }}>MANAGE</div>
           {NAV_ITEMS.filter(i => i.section === 'manage').map(item => (
             <button
@@ -339,11 +301,6 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
         </div>
       </aside>
 
-      <WalkingOrderModal
-        isOpen={walkInOpen}
-        onClose={() => setWalkInOpen(false)}
-        onSuccess={() => { setWalkInOpen(false); onOrderCreated?.(); }}
-      />
     </>
   );
 };
