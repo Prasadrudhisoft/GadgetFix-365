@@ -1,4 +1,4 @@
-// src/Components/admin/CategoriesGrid.jsx
+// src/components/admin/CategoriesGrid.jsx
 import { useData } from '../../hooks/useData';
 import Spinner from '../shared/Spinner';
 

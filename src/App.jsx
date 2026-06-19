@@ -8,6 +8,7 @@ import { AdminProvider } from './contexts/AdminContext';
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import AppRoutes from './routes';
+import { Toast } from './components/shared/Toast';
 import './App.css';
 
 // ✅ New wrapper component
@@ -27,12 +28,13 @@ function App() {
         <AuthProvider>
           <DataProvider>
             <OrdersProvider>
-              <ConditionalAdminProvider>  {/* ✅ फक्त admin साठी */}
+              <ConditionalAdminProvider>  {}
                 <AppRoutes />
               </ConditionalAdminProvider>
             </OrdersProvider>
           </DataProvider>
         </AuthProvider>
+        <Toast />
       </UIProvider>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-// src/Components/admin/BrandsGrid.jsx
+// src/components/admin/BrandsGrid.jsx
 import { useEffect, useState } from 'react';
 import { useData } from '../../hooks/useData';
 import adminApi from '../../services/adminApi';

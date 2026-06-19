@@ -1,4 +1,4 @@
-// Components/modals/FinalQuotationModal.jsx
+// components/modals/FinalQuotationModal.jsx
 import { useState, useEffect } from 'react';
 import Modal from '../shared/Modal';
 import Button from '../shared/Button';

@@ -954,7 +954,7 @@ const OrderDetailModal = ({
   );
 };
 
-// Helper Components
+// Helper components
 const Section = ({ title, children, fullWidth }) => (
   <div style={{ gridColumn: fullWidth ? '1 / -1' : 'auto' }}>
     <div style={{

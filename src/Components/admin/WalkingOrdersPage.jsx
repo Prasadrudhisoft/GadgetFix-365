@@ -139,7 +139,7 @@ export default function WalkingOrdersPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '700px' }}>
               <thead>
                 <tr style={{ background: '#f0f4ff' }}>
-                  {['#','Device','Customer','Problem','Date','Status','Actions'].map(h => (
+                  {['Sr.no','Device','Customer','Problem','Date','Status','Actions'].map(h => (
                     <th key={h} style={{ padding: '13px 16px', textAlign: 'left', fontFamily: "'Manrope',sans-serif", fontSize: '11px', fontWeight: 800, color: '#4b6a9b', textTransform: 'uppercase', letterSpacing: '0.8px', borderBottom: '2px solid rgba(37,99,235,0.18)', whiteSpace: 'nowrap' }}>
                       {h}
                     </th>
