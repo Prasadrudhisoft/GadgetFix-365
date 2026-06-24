@@ -30,10 +30,11 @@ axiosInstance.interceptors.response.use(
       const token = localStorage.getItem('ra_token');
 
       if (token) {
-        localStorage.removeItem('ra_token');
-        localStorage.removeItem('ra_user');
-        window.location.href = '/';
-      }
+  localStorage.removeItem('ra_token');
+  localStorage.removeItem('ra_user');
+  localStorage.removeItem('ra_last_activity'); 
+  window.location.href = '/';
+}
    
     }
     return Promise.reject(error);

@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       // If the stored session has been inactive longer than the limit
       // (e.g. laptop was closed/off for 30+ min), force logout instead of restoring it.
       const inactiveFor = Date.now() - lastActivity;
-      if (lastActivity && inactiveFor > INACTIVITY_LIMIT_MS) {
+      if (!lastActivity || inactiveFor > INACTIVITY_LIMIT_MS){
         localStorage.removeItem('ra_token');
         localStorage.removeItem('ra_user');
         localStorage.removeItem('ra_last_activity');

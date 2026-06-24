@@ -274,7 +274,7 @@ export const BillModal = ({ isOpen, onClose, orderId }) => {
       <table class="services-table">
         <thead>
           <tr>
-            <th style="width: 50px;">#</th>
+            <th style="width: 50px;">Srno</th>
             <th>Service</th>
             <th style="text-align: right;">Amount</th>
           </tr>
@@ -439,7 +439,7 @@ export const BillModal = ({ isOpen, onClose, orderId }) => {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-4 py-3 text-left text-[10px] font-extrabold text-gray-500 uppercase tracking-wide w-12">
-                        #
+                        Srno
                       </th>
                       <th className="px-4 py-3 text-left text-[10px] font-extrabold text-gray-500 uppercase tracking-wide">
                         Service

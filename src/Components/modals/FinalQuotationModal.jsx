@@ -286,7 +286,7 @@ export const FinalQuotationModal = ({ isOpen, onClose, orderId, onConfirmSuccess
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
                   <thead>
                     <tr style={{ background: '#f1f5f9' }}>
-                      <th style={thStyle}>#</th>
+                      <th style={thStyle}>Srno</th>
                       <th style={thStyle}>Service</th>
                       <th style={{ ...thStyle, textAlign: 'right' }}>Amount</th>
                     </tr>

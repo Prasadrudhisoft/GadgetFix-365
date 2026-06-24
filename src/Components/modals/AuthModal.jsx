@@ -180,11 +180,11 @@ export const AuthModal = ({ isOpen, onClose, initialTab = 'login' }) => {
 
   // ── Header text based on active tab/step ──────────
   const getHeaderText = () => {
-    if (activeTab === 'login')    return { title: 'Welcome Back 👋', sub: 'Login to book repairs and track your orders' };
-    if (activeTab === 'register') return { title: 'Create Account 🎉', sub: 'Join thousands of happy customers' };
+    if (activeTab === 'login')    return { title: 'Welcome Back ', sub: 'Login to book repairs and track your orders' };
+    if (activeTab === 'register') return { title: 'Create Account ', sub: 'Join thousands of happy customers' };
     if (activeTab === 'forgot') {
-      if (forgotStep === 'mobile') return { title: 'Forgot Password 🔐', sub: 'Enter your mobile & set a new password' };
-      if (forgotStep === 'otp')    return { title: 'Verify OTP 📲', sub: `OTP sent to +91 ${forgotMobile}` };
+      if (forgotStep === 'mobile') return { title: 'Forgot Password ', sub: 'Enter your mobile & set a new password' };
+      if (forgotStep === 'otp')    return { title: 'Verify OTP ', sub: `OTP sent to +91 ${forgotMobile}` };
     }
     return { title: '', sub: '' };
   };

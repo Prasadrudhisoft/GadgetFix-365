@@ -1,10 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { PAGE_SIZE } from '../utils/constants';
 
 export const usePagination = (items, pageSize = PAGE_SIZE) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(items.length / pageSize) || 1;
+  const totalPages = useMemo(
+    () => Math.ceil(items.length / pageSize) || 1,
+    [items.length, pageSize]
+  );
 
   const paginatedItems = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
@@ -17,7 +20,7 @@ export const usePagination = (items, pageSize = PAGE_SIZE) => {
     }
   };
 
-  const resetPage = () => setCurrentPage(1);
+  const resetPage = useCallback(() => setCurrentPage(1), []);
 
   return {
     currentPage,

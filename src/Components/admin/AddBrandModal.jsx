@@ -230,7 +230,7 @@ const AddBrandModal = ({ isOpen, onClose, categories = [], onSuccess }) => {
         onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
       >
         <div className="abm-box">
-          <div className="abm-handle" aria-hidden="true" />
+          {/* <div className="abm-handle" aria-hidden="true" /> */}
 
           <div className="abm-head">
             <div className="abm-head-text">

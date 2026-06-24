@@ -102,14 +102,14 @@ const ImageLightbox = ({ images = [], isOpen, onClose, startIndex = 0 }) => {
       <div
         style={{
           position: 'relative',
-          maxWidth: '90vw',
-          maxHeight: '80vh',
+          width: '90vw',
+          height: '80vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          overflow: 'hidden',
+          overflow: 'visible',
           borderRadius: '16px',
-          background: '#111',
+          background: 'transparent',
           cursor: isDragging ? 'grabbing' : scale > 1 ? 'grab' : 'default'
         }}
         onMouseDown={handleMouseDown}
@@ -121,14 +121,15 @@ const ImageLightbox = ({ images = [], isOpen, onClose, startIndex = 0 }) => {
           src={images[currentIndex]}
           alt={`View ${currentIndex + 1}`}
           style={{
-            maxWidth: '90vw',
-            maxHeight: '80vh',
+            maxWidth: '85vw',
+            maxHeight: '78vh',
             objectFit: 'contain',
             borderRadius: '16px',
-            transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
+            transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
             transition: isDragging ? 'none' : 'transform 0.2s ease',
             userSelect: 'none',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            transformOrigin: 'center center'
           }}
           draggable={false}
         />

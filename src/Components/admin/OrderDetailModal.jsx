@@ -391,8 +391,8 @@ const OrderDetailModal = ({
                       alt={`Device ${i + 1}`}
                       onClick={() => openLightbox(imageUrls, i)}
                       style={{
-                        width: '80px',
-                        height: '80px',
+                        width: '120px',
+                        height: '120px',
                         borderRadius: '10px',
                         objectFit: 'cover',
                         cursor: 'pointer',
@@ -419,8 +419,8 @@ const OrderDetailModal = ({
                       src={url}
                       controls
                       style={{
-                        width: '80px',
-                        height: '80px',
+                        width: '120px',
+                        height: '120px',
                         borderRadius: '10px',
                         objectFit: 'cover',
                         background: '#000',
