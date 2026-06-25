@@ -11,7 +11,7 @@ import AppRoutes from './routes';
 import { Toast } from './components/shared/Toast';
 import './App.css';
 
-// ✅ New wrapper component
+
 function ConditionalAdminProvider({ children }) {
   const { user } = useContext(AuthContext);
   

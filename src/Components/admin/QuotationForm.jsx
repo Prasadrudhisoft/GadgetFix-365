@@ -12,12 +12,17 @@ const QuotationForm = ({
   onTaxChange
 }) => {
   const [servicesList, setServicesList] = useState(services.length ? services : [createEmptyService()]);
+  const [taxInput, setTaxInput] = useState(String(taxPercent ?? ''));
 
   useEffect(() => {
     if (services.length) {
       setServicesList(services);
     }
   }, [services]);
+
+  useEffect(() => {
+    setTaxInput(String(taxPercent ?? ''));
+  }, [taxPercent]);
 
   function createEmptyService() {
     return {
@@ -208,8 +213,18 @@ const QuotationForm = ({
         <Input
           label="Tax %"
           type="number"
-          value={taxPercent}
-          onChange={(e) => onTaxChange?.(parseFloat(e.target.value) || 0)}
+          value={taxInput}
+          onChange={(e) => {
+            setTaxInput(e.target.value);
+            const parsed = parseFloat(e.target.value);
+            if (!isNaN(parsed)) onTaxChange?.(parsed);
+          }}
+          onBlur={(e) => {
+            const parsed = parseFloat(e.target.value);
+            const val = isNaN(parsed) ? 0 : Math.max(0, Math.min(100, parsed));
+            setTaxInput(String(val));
+            onTaxChange?.(val);
+          }}
           min="0"
           max="100"
           step="0.1"

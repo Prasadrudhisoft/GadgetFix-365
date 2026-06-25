@@ -308,14 +308,14 @@ const WalkingOrderDetailModal = ({
                   {imageUrls.map((url, i) => (
                     <img key={i} src={url} alt={`Device ${i + 1}`}
                       onClick={() => openLightbox(imageUrls, i)}
-                      style={{ width: '80px', height: '80px', borderRadius: '10px', objectFit: 'cover', cursor: 'pointer', border: '2px solid transparent', transition: 'all 0.3s', boxShadow: '0 2px 8px rgba(29,78,216,0.07)' }}
+                      style={{ width: '120px', height: '120px', borderRadius: '10px', objectFit: 'cover', cursor: 'pointer', border: '2px solid transparent', transition: 'all 0.3s', boxShadow: '0 2px 8px rgba(29,78,216,0.07)' }}
                       onMouseEnter={e => { e.target.style.borderColor='#1d4ed8'; e.target.style.transform='scale(1.06)'; }}
                       onMouseLeave={e => { e.target.style.borderColor='transparent'; e.target.style.transform='scale(1)'; }}
                     />
                   ))}
                   {videoUrls.map((url, i) => (
                     <video key={i} src={url} controls
-                      style={{ width: '80px', height: '80px', borderRadius: '10px', objectFit: 'cover', background: '#000' }}
+                      style={{ width: '120px', height: '120px', borderRadius: '10px', objectFit: 'cover', background: '#000' }}
                     />
                   ))}
                 </div>

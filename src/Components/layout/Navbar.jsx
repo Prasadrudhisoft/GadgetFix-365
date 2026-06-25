@@ -6,6 +6,7 @@ import { useUI } from '@hooks/useUI';
 import { scrollToSection } from '@utils/helpers';
 import { UserDropdown } from './UserDropdown';
 import clsx from 'clsx';
+import logoImage from '@assets/images/logo.png';
 
 export const Navbar = ({ onBookRepair, onOpenAuth }) => {
   const { isLoggedIn, user } = useAuth();
@@ -29,24 +30,30 @@ export const Navbar = ({ onBookRepair, onOpenAuth }) => {
   return (
     <nav
       className={clsx(
-        'fixed top-0 left-0 right-0 z-[1000] h-[70px] flex items-center justify-between px-[5%] gap-5',
+        'fixed top-0 left-0 right-0 z-[1000] h-[80px] sm:h-[90px] lg:h-[100px] flex items-center justify-between px-[5%] gap-5',
         'bg-[rgba(248,250,255,0.94)] backdrop-blur-strong border-b border-border',
         'transition-all duration-300',
-        scrolled && 'h-[62px] bg-[rgba(255,255,255,0.98)] shadow-[0_4px_30px_rgba(29,78,216,0.1)] border-b-border2'
+        scrolled && 'h-[70px] sm:h-[78px] lg:h-[84px] bg-[rgba(255,255,255,0.98)] shadow-[0_4px_30px_rgba(29,78,216,0.1)] border-b-border2'
       )}
     >
       {/* Logo */}
       <a href="#" className="flex items-center gap-2.5 no-underline flex-shrink-0">
-        <motion.div
-          className="w-[42px] h-[42px] rounded-[13px] bg-gradient-brand flex items-center justify-center text-white text-lg shadow-brand"
-          whileHover={{ rotate: -8, scale: 1.1 }}
+        <motion.img
+          src={logoImage}
+          alt="GadgetFix 365"
+          className={clsx(
+            // Mobile: 52px, tablet: 58px, desktop: 64px
+            'h-[64px] sm:h-[72px] lg:h-[80px]',
+            // Cap width so it never overflows on small screens
+            'w-auto max-w-[200px] sm:max-w-[260px] lg:max-w-[320px]',
+            // Keep proportions intact, align to left edge
+            'object-contain object-left',
+            // Shrink height when scrolled
+            scrolled && 'h-[56px] sm:h-[64px] lg:h-[72px]'
+          )}
+          whileHover={{ scale: 1.05 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-        >
-          <i className="fas fa-mobile-screen-button"></i>
-        </motion.div>
-        <span className="font-sora text-xl font-extrabold text-gradient-brand tracking-tight whitespace-nowrap">
-          Gadgetfix365
-        </span>
+        />
       </a>
 
       {/* Center Links — desktop only */}

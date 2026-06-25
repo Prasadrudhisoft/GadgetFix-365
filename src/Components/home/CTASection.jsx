@@ -31,13 +31,25 @@ export const CTASection = ({ onBookRepair }) => {
                 <i className="fas fa-calendar-check"></i> Book Now — Get 10% Off
               </motion.button>
 
-              <motion.button
-                className="px-[30px] py-4 rounded-xl font-manrope text-[15px] font-bold text-white bg-transparent border-2 border-white/42 cursor-pointer"
+              <motion.a
+                href="tel:7796955011"
+                className="px-[30px] py-4 rounded-xl font-manrope text-[15px] font-bold text-white bg-transparent border-2 border-white/42 cursor-pointer flex items-center gap-2.5 no-underline"
                 whileHover={{ backgroundColor: 'rgba(255,255,255,0.16)', borderColor: 'white', y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <i className="fas fa-phone"></i> Call Us
-              </motion.button>
+              </motion.a>
+
+              <motion.a
+                href="https://wa.me/917796955011?text=Hi%2C%20I%20need%20help%20with%20my%20device%20repair."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-[30px] py-4 rounded-xl font-manrope text-[15px] font-bold text-white bg-[#25D366]/20 border-2 border-[#25D366]/60 cursor-pointer flex items-center gap-2.5 no-underline"
+                whileHover={{ backgroundColor: 'rgba(37,211,102,0.35)', borderColor: '#25D366', y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <i className="fab fa-whatsapp text-[#25D366]"></i> WhatsApp
+              </motion.a>
             </div>
           </div>
         </div>

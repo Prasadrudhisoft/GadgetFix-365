@@ -1,5 +1,6 @@
 // src/components/layout/Footer.jsx
 import { motion } from 'framer-motion';
+import logoImage from '@assets/images/logo.png';
 
 export const Footer = () => {
   const footerLinks = {
@@ -40,18 +41,48 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-14 mb-14">
           {/* Brand Column */}
           <div className="max-w-[300px]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-[42px] h-[42px] rounded-[13px] bg-gradient-brand flex items-center justify-center text-lg shadow-[0_4px_18px_rgba(29,78,216,0.38)]">
-                <i className="fas fa-mobile-screen-button"></i>
-              </div>
-              <span className="font-sora text-[21px] font-extrabold tracking-tight">
-                Gadgetfix365
-              </span>
+            {/* Logo — white background pill so it pops on dark footer */}
+            <div className="mb-5">
+              <img
+                src={logoImage}
+                alt="GadgetFix 365"
+                className="w-[160px] h-auto object-contain bg-white rounded-xl px-3 py-2"
+              />
             </div>
             <p className="font-manrope text-[13.5px] text-white/50 leading-relaxed font-medium mb-5">
               Your trusted partner for professional mobile device repairs. Quality
               service, transparent pricing, and upto 180 Days Warranty on all repairs.
             </p>
+
+            {/* Contact Info */}
+            <div className="flex flex-col gap-3 mb-5">
+              <a
+                href="tel:7796955011"
+                className="flex items-center gap-3 group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-gradient-brand group-hover:border-transparent transition-all duration-300">
+                  <i className="fas fa-phone text-white/50 text-xs group-hover:text-white transition-colors duration-300"></i>
+                </div>
+                <span className="font-manrope text-[13.5px] text-white/50 font-medium group-hover:text-white transition-colors duration-200">
+                  +91 77969 55011
+                </span>
+              </a>
+              <a
+                href="https://maps.google.com/?q=SS+Mobile+Shop+No+1+Vasant+Chhaya+Complex+Near+Vision+Hospital+College+Road+Nashik"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 group cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-gradient-brand group-hover:border-transparent transition-all duration-300">
+                  <i className="fas fa-location-dot text-white/50 text-xs group-hover:text-white transition-colors duration-300"></i>
+                </div>
+                <span className="font-manrope text-[13px] text-white/50 font-medium leading-relaxed group-hover:text-white transition-colors duration-200">
+                  SS Mobile, Shop No. 1, Vasant-Chhaya Complex,<br />
+                  Near Vision Hospital, College Road, Nashik.
+                </span>
+              </a>
+            </div>
+
             <div className="flex gap-2.5">
               {socialLinks.map((social, idx) => (
                 <motion.a

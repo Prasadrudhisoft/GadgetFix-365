@@ -27,6 +27,9 @@ const iconColorClasses = {
   blue:   'bg-gradient-to-br from-brand-2 to-[#60a5fa] text-white',
 };
 
+// Single deep navy color used everywhere
+const BG = '#0c1a3a';
+
 export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
   const { isLoggedIn } = useAuth();
   const { categories, fetchBrands, isLoadingBrands, brands } = useData();
@@ -68,12 +71,10 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
       <section
         id="services"
         className="py-[110px] px-[5%] relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #0f1e3d 0%, #1a2f5e 40%, #1d4ed8 100%)',
-        }}
+        style={{ background: BG }}
       >
         {/* Subtle texture overlay */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center opacity-[0.05] z-0 pointer-events-none" />
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center opacity-[0.18] z-0 pointer-events-none" />
 
         {/* Ambient glow — top right */}
         <div
@@ -82,7 +83,7 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
             width: '600px',
             height: '600px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99,150,255,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)',
             top: '-200px',
             right: '-200px',
           }}
@@ -95,7 +96,7 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
             width: '500px',
             height: '500px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)',
             bottom: '-150px',
             left: '-150px',
           }}
@@ -107,9 +108,9 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-[18px] py-[7px] rounded-full font-manrope text-[11px] font-extrabold uppercase tracking-[1.8px] mb-5"
               style={{
-                background: 'rgba(99,150,255,0.12)',
-                border: '1px solid rgba(99,150,255,0.22)',
-                color: '#93c5fd',
+                background: 'rgba(255,255,255,0.12)',
+                border: '1px solid rgba(255,255,255,0.22)',
+                color: '#fff',
               }}
             >
               <i className="fas fa-layer-group"></i> Our Categories
@@ -118,7 +119,7 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
               Browse Repair Categories
             </h2>
             <p className="font-manrope text-[16px] leading-[1.8] max-w-[520px] mx-auto font-medium"
-              style={{ color: 'rgba(255,255,255,0.52)' }}>
+              style={{ color: 'rgba(255,255,255,0.65)' }}>
               Wide range of repairs for smartphones, tablets, laptops, and other gadgets — done right, every time.
             </p>
           </div>
@@ -135,22 +136,19 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
                   onClick={() => handleCategoryClick(cat)}
                   className="group relative rounded-2xl cursor-pointer overflow-hidden"
                   style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.14)',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease',
                   }}
-                  whileHover={{
-                    y: -6,
-                    transition: { duration: 0.25 },
-                  }}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.07)';
-                    e.currentTarget.style.borderColor = 'rgba(99,150,255,0.30)';
-                    e.currentTarget.style.boxShadow = '0 24px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,150,255,0.18)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.14)';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.30)';
+                    e.currentTarget.style.boxShadow = '0 24px 60px rgba(0,0,0,0.25)';
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)';
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
@@ -158,7 +156,7 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
                   {!isLoggedIn && (
                     <div className="absolute top-3.5 right-3.5 z-10">
                       <div className="w-7 h-7 rounded-full flex items-center justify-center"
-                        style={{ background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(6px)' }}>
+                        style={{ background: 'rgba(0,0,0,0.25)', backdropFilter: 'blur(6px)' }}>
                         <i className="fas fa-lock text-[11px]" style={{ color: 'rgba(255,255,255,0.7)' }}></i>
                       </div>
                     </div>
@@ -166,7 +164,7 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
 
                   {/* Image area */}
                   <div className="w-full h-[148px] overflow-hidden"
-                    style={{ background: 'rgba(0,0,0,0.18)' }}>
+                    style={{ background: 'rgba(0,0,0,0.15)' }}>
                     {cat.photo_path ? (
                       <img
                         src={getImageUrl(cat.photo_path)}
@@ -189,10 +187,10 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
                       {cat.category_name}
                     </h3>
                     <p className="font-manrope text-[13px] leading-relaxed flex items-center gap-1.5"
-                      style={{ color: 'rgba(255,255,255,0.48)' }}>
+                      style={{ color: 'rgba(255,255,255,0.55)' }}>
                       {isLoggedIn ? (
                         <>
-                          <i className="fas fa-arrow-right text-[10px]" style={{ color: 'rgba(99,150,255,0.8)' }}></i>
+                          <i className="fas fa-arrow-right text-[10px] text-white opacity-60"></i>
                           Tap to view brands
                         </>
                       ) : (
@@ -217,19 +215,19 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
                   transition={{ delay: idx * 0.08, duration: 0.4, ease: 'easeOut' }}
                   className="group relative rounded-2xl p-6 overflow-hidden"
                   style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.14)',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                   }}
                   whileHover={{ y: -6, transition: { duration: 0.25 } }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.07)';
-                    e.currentTarget.style.borderColor = 'rgba(99,150,255,0.28)';
-                    e.currentTarget.style.boxShadow = '0 24px 60px rgba(0,0,0,0.32)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.14)';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.28)';
+                    e.currentTarget.style.boxShadow = '0 24px 60px rgba(0,0,0,0.22)';
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)';
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
@@ -243,14 +241,14 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
                     {service.title}
                   </h3>
                   <p className="font-manrope text-[13px] leading-[1.8] mb-5"
-                    style={{ color: 'rgba(255,255,255,0.52)' }}>
+                    style={{ color: 'rgba(255,255,255,0.55)' }}>
                     {service.desc}
                   </p>
                   <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg font-manrope font-bold text-[12px]"
                     style={{
-                      background: 'rgba(29,78,216,0.22)',
-                      border: '1px solid rgba(99,150,255,0.22)',
-                      color: '#93c5fd',
+                      background: 'rgba(255,255,255,0.12)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      color: '#fff',
                     }}>
                     <i className="fas fa-tag text-[10px]"></i> Starting at {service.price}
                   </div>
@@ -262,12 +260,12 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
         </div>
       </section>
 
-      {/* Brand Selection Modal — rendered outside section to avoid overflow:hidden clipping */}
+      {/* Brand Selection Modal */}
       <AnimatePresence>
         {showBrandModal && selectedCategory && (
           <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ background: 'rgba(5, 12, 30, 0.72)', backdropFilter: 'blur(8px)' }}
+            style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -279,25 +277,24 @@ export const ServicesSection = ({ onBookRepair, onOpenAuth }) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 12 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-        className="relative w-full max-w-[520px] rounded-2xl overflow-hidden"
-style={{
-  background: 'linear-gradient(135deg, #0f1e3d 0%, #1a2f5e 40%, #1d4ed8 100%)',
-  border: '1px solid rgba(99,150,255,0.18)',
-  boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,150,255,0.1)',
-}}
+              className="relative w-full max-w-[520px] rounded-2xl overflow-hidden"
+              style={{
+                background: BG,
+                border: '1px solid rgba(255,255,255,0.18)',
+                boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
+              }}
               onClick={e => e.stopPropagation()}
             >
               {/* Modal header */}
               <div className="px-6 pt-6 pb-5"
-                style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+                style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                 <div className="flex items-start justify-between">
                   <div>
-                    {/* Category pill */}
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full mb-3 font-manrope text-[11px] font-extrabold uppercase tracking-[1.4px]"
                       style={{
-                        background: 'rgba(99,150,255,0.14)',
-                        border: '1px solid rgba(99,150,255,0.22)',
-                        color: '#93c5fd',
+                        background: 'rgba(255,255,255,0.12)',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        color: '#fff',
                       }}>
                       <i className="fas fa-layer-group text-[9px]"></i>
                       {selectedCategory.category_name}
@@ -306,7 +303,7 @@ style={{
                       Select a brand
                     </h3>
                     <p className="font-manrope text-[13px] mt-1"
-                      style={{ color: 'rgba(255,255,255,0.44)' }}>
+                      style={{ color: 'rgba(255,255,255,0.5)' }}>
                       Choose your device brand to continue booking
                     </p>
                   </div>
@@ -316,17 +313,17 @@ style={{
                     onClick={closeModal}
                     className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 flex-shrink-0 mt-0.5"
                     style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      color: 'rgba(255,255,255,0.55)',
+                      background: 'rgba(255,255,255,0.08)',
+                      border: '1px solid rgba(255,255,255,0.14)',
+                      color: 'rgba(255,255,255,0.6)',
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.16)';
                       e.currentTarget.style.color = '#fff';
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
-                      e.currentTarget.style.color = 'rgba(255,255,255,0.55)';
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                      e.currentTarget.style.color = 'rgba(255,255,255,0.6)';
                     }}
                   >
                     <i className="fas fa-times text-[13px]"></i>
@@ -339,8 +336,8 @@ style={{
                 {isLoadingBrands ? (
                   <div className="flex flex-col items-center justify-center py-12 gap-3">
                     <div className="w-8 h-8 rounded-full border-[2.5px] animate-spin"
-                      style={{ borderColor: 'rgba(99,150,255,0.2)', borderTopColor: '#6396ff' }} />
-                    <p className="font-manrope text-[13px]" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                      style={{ borderColor: 'rgba(255,255,255,0.2)', borderTopColor: '#fff' }} />
+                    <p className="font-manrope text-[13px]" style={{ color: 'rgba(255,255,255,0.45)' }}>
                       Loading brands…
                     </p>
                   </div>
@@ -358,19 +355,19 @@ style={{
                         onClick={() => handleBrandClick(brand.id)}
                         className="flex flex-col items-center gap-2 rounded-xl p-3.5 cursor-pointer"
                         style={{
-                          background: 'rgba(255,255,255,0.04)',
-                          border: '1px solid rgba(255,255,255,0.08)',
+                          background: 'rgba(255,255,255,0.08)',
+                          border: '1px solid rgba(255,255,255,0.14)',
                           transition: 'background 0.2s ease, border-color 0.2s ease',
                         }}
                         whileHover={{ scale: 1.04 }}
                         whileTap={{ scale: 0.96 }}
                         onMouseEnter={e => {
-                          e.currentTarget.style.background = 'rgba(99,150,255,0.12)';
-                          e.currentTarget.style.borderColor = 'rgba(99,150,255,0.36)';
+                          e.currentTarget.style.background = 'rgba(255,255,255,0.16)';
+                          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.32)';
                         }}
                         onMouseLeave={e => {
-                          e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                          e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)';
                         }}
                       >
                         {brand.photo_path ? (
@@ -384,7 +381,7 @@ style={{
                           <div className="text-[26px] leading-none">📱</div>
                         )}
                         <span className="font-manrope text-[11.5px] font-bold text-center leading-tight"
-                          style={{ color: 'rgba(255,255,255,0.82)' }}>
+                          style={{ color: 'rgba(255,255,255,0.85)' }}>
                           {brand.brand_name}
                         </span>
                       </motion.div>
@@ -394,7 +391,7 @@ style={{
                   <div className="flex flex-col items-center justify-center py-12 gap-3">
                     <div className="text-3xl">🔍</div>
                     <p className="font-manrope text-[13px] font-semibold text-center"
-                      style={{ color: 'rgba(255,255,255,0.38)' }}>
+                      style={{ color: 'rgba(255,255,255,0.45)' }}>
                       No brands available for {selectedCategory.category_name} yet.
                     </p>
                   </div>
@@ -407,17 +404,17 @@ style={{
                   onClick={closeModal}
                   className="w-full py-2.5 rounded-xl font-manrope text-[13px] font-semibold transition-all duration-200"
                   style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.09)',
-                    color: 'rgba(255,255,255,0.45)',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.14)',
+                    color: 'rgba(255,255,255,0.55)',
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.09)';
-                    e.currentTarget.style.color = 'rgba(255,255,255,0.7)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.14)';
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                    e.currentTarget.style.color = 'rgba(255,255,255,0.45)';
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.55)';
                   }}
                 >
                   Cancel

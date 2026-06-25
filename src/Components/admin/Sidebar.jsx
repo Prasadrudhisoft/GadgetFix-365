@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { getInitials } from '../../utils/adminHelpers';
+import logoImage from '@assets/images/logo.png';
 
 const NAV_ITEMS = [
   { id: 'dashboard',      icon: 'fas fa-chart-pie',            label: 'Dashboard',     section: 'main',   badge: null      },
@@ -160,31 +161,51 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
 
         {/* Logo */}
         <div style={{
-          padding: '24px 20px 20px',
+          padding: '14px 16px',
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
+          gap: '10px',
           borderBottom: '1px solid rgba(255,255,255,0.07)',
           background: 'rgba(0,0,0,0.18)',
           flexShrink: 0,
         }}>
+          {/* Logo pill */}
           <div style={{
-            width: '44px', height: '44px', borderRadius: '13px',
-            background: 'linear-gradient(135deg,#1d4ed8,#2563eb,#1e40af)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '20px', color: '#fff', flexShrink: 0,
-            boxShadow: '0 8px 32px rgba(29,78,216,0.38)',
+            background: '#fff',
+            borderRadius: '10px',
+            padding: '5px 8px',
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
+            width: '120px',
           }}>
-            <i className="fas fa-mobile-screen-button" />
+            <img
+              src={logoImage}
+              alt="GadgetFix 365"
+              style={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'contain',
+                display: 'block',
+              }}
+            />
           </div>
-          <div style={{ fontFamily: "'Sora',sans-serif", fontSize: '17px', fontWeight: 800, color: '#fff', letterSpacing: '-0.5px' }}>
-            Gadgetfix365
+          {/* ADMIN badge + panel label stacked */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
             <span style={{
               fontSize: '9px', fontWeight: 800,
               background: 'linear-gradient(135deg,#ea580c,#db2777)',
               color: '#fff', padding: '3px 8px',
-              borderRadius: '9999px', marginLeft: '6px', letterSpacing: '0.5px',
+              borderRadius: '9999px', letterSpacing: '0.5px',
+              fontFamily: "'Sora',sans-serif",
+              alignSelf: 'flex-start',
             }}>ADMIN</span>
+            <span style={{
+              fontFamily: "'Manrope',sans-serif",
+              fontSize: '10px', fontWeight: 600,
+              color: 'rgba(255,255,255,0.3)',
+              letterSpacing: '0.3px',
+            }}>Control Panel</span>
           </div>
         </div>
 
