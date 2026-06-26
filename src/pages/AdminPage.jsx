@@ -23,7 +23,7 @@ import WalkingOrdersPage from '../components/admin/WalkingOrdersPage';
 const AdminPage = () => {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useAuth();
-  const { stats, orders } = useAdmin();
+  const { stats, orders, walkingStats, fetchWalkingOrders } = useAdmin();
   const { categories, fetchCategories } = useData();
 
   const [activePage, setActivePage]                     = useState('dashboard');
@@ -80,6 +80,7 @@ const AdminPage = () => {
         activePage={activePage}
         onPageChange={setActivePage}
         pendingCount={stats.pending}
+        walkingPendingCount={walkingStats.pending}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onToggle={() => setSidebarOpen(prev => !prev)}
@@ -217,7 +218,7 @@ const AdminPage = () => {
           )}
 
           {activePage === 'orders'          && <OrdersTable onViewOrder={handleViewOrder} onViewBill={handleViewBill} />}
-          {activePage === 'walking-orders'  && <WalkingOrdersPage onViewOrder={handleViewOrder} />}
+          {activePage === 'walking-orders'  && <WalkingOrdersPage onViewOrder={handleViewOrder} onRefresh={fetchWalkingOrders} />}
           {activePage === 'bills'           && <BillsTable onViewBill={handleViewBill} />}
           {activePage === 'categories' && <CategoriesGrid onAddCategory={() => setAddCategoryOpen(true)} />}
           {activePage === 'brands'     && <BrandsGrid onAddBrand={() => setAddBrandOpen(true)} />}

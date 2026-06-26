@@ -6,13 +6,13 @@ import logoImage from '@assets/images/logo.png';
 const NAV_ITEMS = [
   { id: 'dashboard',      icon: 'fas fa-chart-pie',            label: 'Dashboard',     section: 'main',   badge: null      },
   { id: 'orders',         icon: 'fas fa-clipboard-list',        label: 'All Orders',    section: 'main',   badge: 'pending' },
-  { id: 'walking-orders', icon: 'fas fa-person-walking',        label: 'Walk-in Orders',section: 'main',   badge: null      },
+  { id: 'walking-orders', icon: 'fas fa-person-walking',        label: 'Walk-in Orders',section: 'main',   badge: 'walking' },
   { id: 'bills',          icon: 'fas fa-file-invoice-dollar',   label: 'Bills',         section: 'main',   badge: null      },
   { id: 'categories',     icon: 'fas fa-layer-group',           label: 'Categories',    section: 'manage', badge: null      },
   { id: 'brands',         icon: 'fas fa-tags',                  label: 'Brands',        section: 'manage', badge: null      },
 ];
 
-const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, onToggle }) => {
+const Sidebar = ({ activePage, onPageChange, pendingCount = 0, walkingPendingCount = 0, isOpen, onClose, onToggle }) => {
   const { user, logout } = useAuth();
   const [time, setTime] = useState('');
 
@@ -115,6 +115,11 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
 
         /* ── OLD toggle button — HIDDEN always ── */
         .sidebar-toggle-btn { display: none !important; }
+
+        @keyframes badgePulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.75; transform: scale(1.1); }
+        }
 
         /* ── Overlay ── */
         .sidebar-overlay {
@@ -231,6 +236,18 @@ const Sidebar = ({ activePage, onPageChange, pendingCount = 0, isOpen, onClose, 
                   minWidth: '20px', textAlign: 'center',
                 }}>
                   {pendingCount}
+                </span>
+              )}
+              {item.badge === 'walking' && walkingPendingCount > 0 && (
+                <span style={{
+                  marginLeft: 'auto',
+                  background: 'linear-gradient(135deg,#7c3aed,#6d28d9)',
+                  color: '#fff', fontSize: '10px', fontWeight: 800,
+                  padding: '2px 8px', borderRadius: '9999px',
+                  minWidth: '20px', textAlign: 'center',
+                  animation: 'badgePulse 2s ease-in-out infinite',
+                }}>
+                  {walkingPendingCount}
                 </span>
               )}
             </button>

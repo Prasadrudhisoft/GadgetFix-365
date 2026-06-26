@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Modal from '../shared/Modal';
 import Input from '../shared/Input';
 import Textarea from '../shared/Textarea';
@@ -9,17 +9,15 @@ import { useAdmin } from '../../hooks/useAdmin';
 import { useToast } from '../../hooks/useUI';
 import { formatCurrency } from '../../utils/adminHelpers';
 
-const FinalQuotationAdminModal = ({ isOpen, onClose, orderId }) => {
+const FinalQuotationAdminModal = ({ isOpen, onClose, orderId, onSuccess }) => {
   const [activeTab, setActiveTab] = useState('primary');
   const [problemTech, setProblemTech] = useState('');
   const [problemDescTech, setProblemDescTech] = useState('');
   const [files, setFiles] = useState([]);
   const [primaryServices, setPrimaryServices] = useState([createEmptyService()]);
   const [primaryTax, setPrimaryTax] = useState(0);
-  const [primaryTaxInput, setPrimaryTaxInput] = useState('0');
   const [duplicateServices, setDuplicateServices] = useState([createEmptyService()]);
   const [duplicateTax, setDuplicateTax] = useState(0);
-  const [duplicateTaxInput, setDuplicateTaxInput] = useState('0');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -139,9 +137,12 @@ const FinalQuotationAdminModal = ({ isOpen, onClose, orderId }) => {
       if (data.status === 'success') {
         showToast('✅ Final quotation sent successfully!', 'success');
         fetchOrders(false);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+        if (onSuccess) {
+          // Walking mode: close modal and show inline confirm in parent
+          onSuccess();
+        } else {
+          setTimeout(() => { window.location.reload(); }, 1500);
+        }
       } else {
         setError(`❌ ${data.message || 'Failed to send final quotation'}`);
       }
@@ -159,10 +160,8 @@ const FinalQuotationAdminModal = ({ isOpen, onClose, orderId }) => {
     setFiles([]);
     setPrimaryServices([createEmptyService()]);
     setPrimaryTax(0);
-    setPrimaryTaxInput('0');
     setDuplicateServices([createEmptyService()]);
     setDuplicateTax(0);
-    setDuplicateTaxInput('0');
     setError('');
     setActiveTab('primary');
     onClose();
@@ -399,30 +398,11 @@ const FinalQuotationAdminModal = ({ isOpen, onClose, orderId }) => {
           <Input
             label="Tax %"
             type="number"
-            value={activeTab === 'primary' ? primaryTaxInput : duplicateTaxInput}
-            onChange={(e) => {
-              const raw = e.target.value;
-              if (activeTab === 'primary') {
-                setPrimaryTaxInput(raw);
-                const parsed = parseFloat(raw);
-                if (!isNaN(parsed)) setPrimaryTax(parsed);
-              } else {
-                setDuplicateTaxInput(raw);
-                const parsed = parseFloat(raw);
-                if (!isNaN(parsed)) setDuplicateTax(parsed);
-              }
-            }}
-            onBlur={(e) => {
-              const parsed = parseFloat(e.target.value);
-              const val = isNaN(parsed) ? 0 : Math.max(0, Math.min(100, parsed));
-              if (activeTab === 'primary') {
-                setPrimaryTaxInput(String(val));
-                setPrimaryTax(val);
-              } else {
-                setDuplicateTaxInput(String(val));
-                setDuplicateTax(val);
-              }
-            }}
+            value={activeTab === 'primary' ? primaryTax : duplicateTax}
+            onChange={(e) => activeTab === 'primary'
+              ? setPrimaryTax(parseFloat(e.target.value) || 0)
+              : setDuplicateTax(parseFloat(e.target.value) || 0)
+            }
             min="0"
             max="100"
             step="0.1"

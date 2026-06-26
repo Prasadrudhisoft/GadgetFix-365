@@ -1,9 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import adminApi from '../../services/adminApi';
 import WalkingOrderModal from '../modals/WalkingOrderModal';
 import WalkingOrderDetailModal from './WalkingOrderDetailModal';
 import BillDetailModal from './BillDetailModal';
-import ViewTempQuotationModal from './ViewTempQuotationModal';
 import ViewFinalQuotationModal from './ViewFinalQuotationModal';
 import FinalQuotationAdminModal from './FinalQuotationAdminModal';
 import MarkPaidModal from './MarkPaidModal';
@@ -13,10 +12,6 @@ import { useUI } from '../../hooks/useUI';
 const statusColor = (status) => {
   const map = {
     Requested:            { bg: '#eff6ff', color: '#1d4ed8' },
-    quotation_sent:       { bg: '#fefce8', color: '#a16207' },
-    Confirmed:            { bg: '#f0fdf4', color: '#15803d' },
-    'Picked Up':          { bg: '#fff7ed', color: '#c2410c' },
-    Reviewed:             { bg: '#fdf4ff', color: '#7e22ce' },
     final_quotation_sent: { bg: '#fefce8', color: '#a16207' },
     Final_Confirmed:      { bg: '#f0fdf4', color: '#15803d' },
     Repairing:            { bg: '#fff7ed', color: '#ea580c' },
@@ -39,8 +34,6 @@ export default function WalkingOrdersPage() {
   const [selectedOrder, setSelectedOrder]     = useState(null);
   const [billOpen, setBillOpen]               = useState(false);
   const [selectedBillId, setSelectedBillId]   = useState(null);
-  const [tempQuoteOpen, setTempQuoteOpen]     = useState(false);
-  const [selectedTempId, setSelectedTempId]   = useState(null);
   const [finalQuoteOpen, setFinalQuoteOpen]   = useState(false);
   const [selectedFinalId, setSelectedFinalId] = useState(null);
   const [sendFinalOpen, setSendFinalOpen]     = useState(false);
@@ -48,10 +41,12 @@ export default function WalkingOrdersPage() {
   const [markPaidOpen, setMarkPaidOpen]       = useState(false);
   const [selectedPaidId, setSelectedPaidId]   = useState(null);
 
+  // ref to trigger inline confirm in WalkingOrderDetailModal after final quotation sent
+  const detailModalRef = useRef(null);
+
   const fetchWalkingOrders = useCallback(async () => {
     setLoading(true);
     try {
-      // Try dedicated walking orders endpoint first
       let walking = [];
       try {
         const res = await adminApi.getWalkingOrders();
@@ -59,7 +54,6 @@ export default function WalkingOrdersPage() {
         walking = payload?.my_orders || payload?.orders || payload?.data || [];
         if (!Array.isArray(walking)) walking = [];
       } catch {
-        // Fallback: filter from all orders
         const res = await adminApi.getOrders();
         const all = res.data?.orders || res.data?.data || [];
         walking = (Array.isArray(all) ? all : []).filter(o =>
@@ -92,6 +86,16 @@ export default function WalkingOrdersPage() {
   });
 
   const handleViewOrder = (order) => { setSelectedOrder(order); setDetailOpen(true); };
+
+  // After FinalQuotationAdminModal saves — close it and show inline confirm in detail modal
+  const handleFinalQuotationSuccess = () => {
+    setSendFinalOpen(false);
+    setSelectedSendId(null);
+    // Refresh selected order status so inline confirm panel shows
+    if (selectedOrder) {
+      setSelectedOrder(prev => ({ ...prev, status: 'final_quotation_sent' }));
+    }
+  };
 
   return (
     <>
@@ -205,7 +209,7 @@ export default function WalkingOrdersPage() {
         )}
       </div>
 
-      {/* ── Modals ──────────────────────────────────────────── */}
+      {/* ── Modals ── */}
 
       <WalkingOrderModal
         isOpen={createOpen}
@@ -214,26 +218,20 @@ export default function WalkingOrdersPage() {
       />
 
       <WalkingOrderDetailModal
+        ref={detailModalRef}
         isOpen={detailOpen}
         onClose={() => { setDetailOpen(false); setSelectedOrder(null); }}
         order={selectedOrder}
-        onViewBill={(id)              => { setSelectedBillId(id);   setBillOpen(true);       }}
-        onViewTempQuotation={(id)     => { setSelectedTempId(id);   setTempQuoteOpen(true);  }}
-        onViewFinalQuotation={(id)    => { setSelectedFinalId(id);  setFinalQuoteOpen(true); }}
-        onSendFinalQuotation={(id)    => { setSelectedSendId(id);   setSendFinalOpen(true);  }}
-        onMarkPaid={(id)              => { setSelectedPaidId(id);   setMarkPaidOpen(true);   }}
+        onViewBill={(id)           => { setSelectedBillId(id);  setBillOpen(true);      }}
+        onViewFinalQuotation={(id) => { setSelectedFinalId(id); setFinalQuoteOpen(true);}}
+        onSendFinalQuotation={(id) => { setSelectedSendId(id);  setSendFinalOpen(true); }}
+        onMarkPaid={(id)           => { setSelectedPaidId(id);  setMarkPaidOpen(true);  }}
       />
 
       <BillDetailModal
         isOpen={billOpen}
         onClose={() => { setBillOpen(false); setSelectedBillId(null); }}
         orderId={selectedBillId}
-      />
-
-      <ViewTempQuotationModal
-        isOpen={tempQuoteOpen}
-        onClose={() => { setTempQuoteOpen(false); setSelectedTempId(null); }}
-        orderId={selectedTempId}
       />
 
       <ViewFinalQuotationModal
@@ -246,6 +244,7 @@ export default function WalkingOrdersPage() {
         isOpen={sendFinalOpen}
         onClose={() => { setSendFinalOpen(false); setSelectedSendId(null); }}
         orderId={selectedSendId}
+        onSuccess={handleFinalQuotationSuccess}
       />
 
       <MarkPaidModal

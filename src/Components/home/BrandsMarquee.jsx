@@ -8,7 +8,6 @@ const staticBrands = [
   { name: 'OnePlus',      img: 'https://cdn.simpleicons.org/oneplus/F5010C' },
   { name: 'Xiaomi',       img: 'https://cdn.simpleicons.org/xiaomi/FF6900' },
   { name: 'Huawei',       img: 'https://cdn.simpleicons.org/huawei/CF0A2C' },
-  { name: 'Realme',       img: 'https://cdn.simpleicons.org/realme/FFD400' },
   { name: 'Vivo',         img: 'https://cdn.simpleicons.org/vivo/415FFF' },
   { name: 'Oppo',         img: 'https://cdn.simpleicons.org/oppo/1D8348' },
   { name: 'Motorola',     img: 'https://cdn.simpleicons.org/motorola/E1140A' },
